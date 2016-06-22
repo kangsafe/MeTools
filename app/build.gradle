@@ -17,6 +17,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
+    productFlavors {
+        huawei {
+            minSdkVersion 14
+            applicationId 'com.tools.demo'
+            targetSdkVersion 23
+        }
+    }
+
+    //自定义apk安装包名
+    applicationVariants.all { variant ->
+        if (variant.buildType.name.equals('release')) {
+            variant.mergedFlavor.versionCode = gitVersionCode()
+            variant.mergedFlavor.versionName = gitVersionTag()
+            variant.outputs.each { output ->
+                output.outputFile = new File(
+                        output.outputFile.parent + "/${variant.buildType.name}",
+                        "MeToolsDemo-${variant.buildType.name}-v${variant.versionName}-${variant.productFlavors[0].name}-${releaseTime()}.apk".toLowerCase())
+            }
+        }
+    }
 }
 
 dependencies {

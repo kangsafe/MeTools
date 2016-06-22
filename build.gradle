@@ -21,3 +21,54 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+def gitVersionCode() {
+//    def cmd = 'git rev-list HEAD --count'
+//    cmd.execute().text.trim().toInteger()
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            //此处可以根据实际情况使用git rev-list --all --count
+            commandLine 'git', 'rev-list', '--first-parent', '--count', 'HEAD'
+            standardOutput = stdout
+        }
+        //+300是因为与之前的版本命名区分开，不会与之前的重复
+        return Integer.parseInt(stdout.toString().trim())
+    }
+    catch (ignored) {
+        println "===================error code!"
+        return 1;
+    }
+}
+
+def gitVersionTag() {
+//    def cmd = 'git describe --tags'
+//    def version = cmd.execute().text.trim()
+//
+//    def pattern = "-(\\d+)-g"
+//    def matcher = version =~ pattern
+//
+//    if (matcher) {
+//        version = version.substring(0, matcher.start()) + "." + matcher[0][1]
+//    } else {
+//        version = version + ".0"
+//    }
+//
+//    return version
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'describe', '--tags', '--dirty'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    }
+    catch (ignored) {
+        println "===================error name!"
+        return "1.0";
+    }
+}
