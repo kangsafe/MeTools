@@ -28,7 +28,7 @@ task makeJar(type: Copy) {
     from('build/intermediates/bundles/release/')
     into('build/libs/')
     include('classes.jar')
-    rename ('classes.jar', 'metools-sdk-1.0.jar')
+    rename('classes.jar', 'metools-sdk-1.0.jar')
 }
 
 makeJar.dependsOn(build)

@@ -31,11 +31,14 @@ public class HttpHelper {
             }
             //排序后
             for (int i = 0; i < infoIds.size(); i++) {
-                httpArg.concat(String.format("%s=%s&", infoIds.get(i).getKey(), infoIds.get(i).getValue()));
-                //            String id = infoIds.get(i).toString();
-                //            System.out.println(id);
+                String key = infoIds.get(i).getKey();
+                String value = infoIds.get(i).getValue();
+                String str = String.format("%s=%s&", key, value);
+                httpArg += str;
             }
-            httpArg = httpArg.substring(0, httpArg.length() - 1);
+            if (httpArg.length() > 1) {
+                httpArg = httpArg.substring(0, httpArg.length() - 1);
+            }
         }
         return httpArg;
     }

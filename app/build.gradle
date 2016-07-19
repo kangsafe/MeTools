@@ -17,6 +17,39 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
+    productFlavors {
+        huawei {
+            minSdkVersion 14
+            applicationId 'com.tools.demo'
+            targetSdkVersion 23
+        }
+        umeng {
+            minSdkVersion 14
+            applicationId 'com.tools.demo'
+            targetSdkVersion 23
+        }
+        yingyongbao {
+            minSdkVersion 14
+            applicationId 'com.tools.demo'
+            targetSdkVersion 23
+        }
+        defaultConfig
+    }
+
+    //自定义apk安装包名
+    applicationVariants.all { variant ->
+        if (variant.buildType.name.equals('release')) {
+            variant.mergedFlavor.versionCode = gitVersionCode()
+            variant.mergedFlavor.versionName = gitVersionTag()
+            variant.outputs.each { output ->
+                output.outputFile = new File(
+                        rootDir.absolutePath + "/build/${variant.buildType.name}",//output.outputFile.parent
+                        "MeToolsDemo-v${variant.versionName}-${variant.productFlavors[0].name}-${releaseTime()}.apk".toLowerCase())
+            }
+        }
+    }
 }
 
 dependencies {
@@ -24,4 +57,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile project(':tools')
+    compile files('libs/svsdklib.jar')
 }

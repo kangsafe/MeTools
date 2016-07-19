@@ -20,8 +20,6 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import me.tools.encoder.R;
-
 /**
  * Created by Admin on 2016/6/21 0021.
  */
