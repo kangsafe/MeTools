@@ -1,25 +1,26 @@
 package me.tools.demo;
 
-import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
+import android.widget.Button;
 
 import me.tools.times.SntpClient;
 import me.tools.transform.FileHelper;
-import me.tools.vpn.VPNInterface;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private Button btn = null;
     private Button vpn = null;
+    private Button youth = null;
+    private Button slideshow = null;
+    private Button cyclepager = null;
+    private Button lanshare = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private void initView() {
         btn = (Button) findViewById(R.id.time_btn);
         vpn = (Button) findViewById(R.id.vpn);
+        youth = (Button) findViewById(R.id.youthbanner);
+        slideshow = (Button) findViewById(R.id.slideshow);
+        cyclepager = (Button) findViewById(R.id.cyclepage);
+        lanshare = (Button) findViewById(R.id.lanshare);
     }
 
     private Handler handler = new Handler() {
@@ -59,13 +64,34 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.time_btn:
                 new MyThread().start();
                 //Toast.makeText(MainActivity.this, "str", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.vpn:
-                Intent intent = new Intent(MainActivity.this, VPNActivity.class);
+                intent.setClass(this, VPNActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.youthbanner:
+                intent.setClass(MainActivity.this, YouthBannerActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.slideshow:
+                intent.setClass(MainActivity.this, SlideShowActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.cyclepage:
+                intent.setClass(MainActivity.this, CycleViewPagerActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.lanshare:
+                intent.setClass(MainActivity.this, LanShareActivity.class);
                 startActivity(intent);
                 finish();
                 break;

@@ -1,25 +1,25 @@
 package me.tools.demo;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.stevenhu.android.phone.bean.ADInfo;
-
-import me.tools.utils.ViewFactory;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-import cn.androiddevelop.cycleviewpager.lib.CycleViewPager;
-import cn.androiddevelop.cycleviewpager.lib.CycleViewPager.ImageCycleViewListener;
+
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import me.tools.banner.bean.ADInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import me.tools.banner.frag.CycleViewPagerFrag;
+import me.tools.banner.frag.CycleViewPagerFrag.ImageCycleViewListener;
+import me.tools.utils.ViewFactory;
 
 /**
  * 描述：主页
@@ -31,7 +31,7 @@ public class CycleViewPagerActivity extends Activity {
 
 	private List<ImageView> views = new ArrayList<ImageView>();
 	private List<ADInfo> infos = new ArrayList<ADInfo>();
-	private CycleViewPager cycleViewPager;
+	private CycleViewPagerFrag cycleViewPagerFrag;
 	
 	private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
 			"http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
@@ -42,7 +42,7 @@ public class CycleViewPagerActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ui_main);
+		setContentView(R.layout.activity_cycleviewpager);
 		configImageLoader();
 		initialize();
 	}
@@ -50,7 +50,7 @@ public class CycleViewPagerActivity extends Activity {
 	@SuppressLint("NewApi")
 	private void initialize() {
 		
-		cycleViewPager = (CycleViewPager) getFragmentManager()
+		cycleViewPagerFrag = (CycleViewPagerFrag) getFragmentManager()
 				.findFragmentById(R.id.fragment_cycle_viewpager_content);
 		
 		for(int i = 0; i < imageUrls.length; i ++){
@@ -67,26 +67,26 @@ public class CycleViewPagerActivity extends Activity {
 		}
 		// 将第一个ImageView添加进来
 		views.add(ViewFactory.getImageView(this, infos.get(0).getUrl()));
-		
-		// 设置循环，在调用setData方法前调用
-		cycleViewPager.setCycle(true);
 
 		// 在加载数据前设置是否循环
-		cycleViewPager.setData(views, infos, mAdCycleViewListener);
+		cycleViewPagerFrag.setCycle(true);
+
+		// 设置循环，在调用setData方法前调用
+		cycleViewPagerFrag.setData(views, infos, mAdCycleViewListener);
 		//设置轮播
-		cycleViewPager.setWheel(true);
+		cycleViewPagerFrag.setWheel(true);
 
 	    // 设置轮播时间，默认5000ms
-		cycleViewPager.setTime(2000);
+		cycleViewPagerFrag.setTime(2000);
 		//设置圆点指示图标组居中显示，默认靠右
-		cycleViewPager.setIndicatorCenter();
+		cycleViewPagerFrag.setIndicatorCenter();
 	}
 	
 	private ImageCycleViewListener mAdCycleViewListener = new ImageCycleViewListener() {
 
 		@Override
 		public void onImageClick(ADInfo info, int position, View imageView) {
-			if (cycleViewPager.isCycle()) {
+			if (cycleViewPagerFrag.isCycle()) {
 				position = position - 1;
 				Toast.makeText(CycleViewPagerActivity.this,
 						"position-->" + info.getContent(), Toast.LENGTH_SHORT)

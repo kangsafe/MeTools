@@ -3,12 +3,16 @@ package me.tools.demo;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class MainActivity extends Activity {
+import me.tools.banner.SlideShowView;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-	}
+public class SlideShowActivity extends Activity {
 
+    private SlideShowView view;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_slideshow);
+        view = (SlideShowView) findViewById(R.id.slideshowView);
+    }
 }

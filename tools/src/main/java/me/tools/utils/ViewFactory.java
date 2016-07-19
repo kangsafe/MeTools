@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.stevenhu.android.phone.ui.R;
+
+import me.tools.R;
+
 /**
  * ImageView创建工厂
  */
