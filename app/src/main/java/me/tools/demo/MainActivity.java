@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import info.lamatricexiste.network.ActivityMain;
 import me.tools.times.SntpClient;
 import me.tools.transform.FileHelper;
 
@@ -91,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 finish();
                 break;
             case R.id.lanshare:
-                intent.setClass(MainActivity.this, LanShareActivity.class);
+                //intent.setClass(MainActivity.this, LanShareActivity.class);
+                intent.setClass(MainActivity.this, ActivityMain.class);
                 startActivity(intent);
                 finish();
                 break;
